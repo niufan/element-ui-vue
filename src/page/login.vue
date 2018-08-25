@@ -36,7 +36,7 @@
         },
         methods: {
             ...mapActions({
-                login: 'authToken/loginByEmail',
+                login: 'auth/loginByEmail',
                 loadLang: 'loadLang'
             }),
             onSubmit() {

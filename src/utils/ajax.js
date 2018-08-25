@@ -50,7 +50,7 @@ function checkToken(cancel, callback){
                 }, 500)
             } else {
                 getTokenLock = true;
-                store.dispatch("authToken/getNewToken").then(() => {
+                store.dispatch("auth/getNewToken").then(() => {
                     console.log("已获取新token");
                     callback();
                     getTokenLock = false
@@ -59,10 +59,10 @@ function checkToken(cancel, callback){
         }
         // 跳转授权Token
         if(authToken.tokenTimeoutMethod === 'jumpauthPage' && authToken.isLogin()){
-            if(router.currentRoute.path !== '/authToken'){
+            if(router.currentRoute.path !== '/auth'){
                 // BUG: 无法保证一定会中断所有请求
                 cancel();
-                router.push('/authToken')
+                router.push('/auth')
             }
         }
     } else {
