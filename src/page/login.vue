@@ -36,20 +36,21 @@
         },
         methods: {
             ...mapActions({
-                login: 'auth/loginByEmail',
+                login: 'oauth2/login',
                 loadLang: 'loadLang'
             }),
             onSubmit() {
                 this.$refs.form.validate((valid) => {
                     if (valid) {
-                        console.log('submit!' + this.form.username + this.form.password);
                         this.login({
                             username: this.form.username,
                             password: this.form.password
                         }).then(res => {
-                            if(res.login){
+                            if (res) {
                                 this.$router.push('home')
                             }
+                        }, error => {
+                            console.log(error);
                         })
                     } else {
                         return false

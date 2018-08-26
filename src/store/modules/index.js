@@ -1,9 +1,9 @@
 import user from './user'
-import auth from './auth'
+import oauth2 from './oauth2'
 import tagNav from './tagNav'
 
 export default {
     user: user,
-    auth: auth,
+    oauth2: oauth2,
     tagNav: tagNav
 }
