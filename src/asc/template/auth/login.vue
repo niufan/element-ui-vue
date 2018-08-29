@@ -36,7 +36,7 @@
         },
         methods: {
             ...mapActions({
-                login: 'oauth2/login',
+                login: 'asc/auth/oauth2/login',
                 loadLang: 'loadLang'
             }),
             onSubmit() {

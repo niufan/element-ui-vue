@@ -55,12 +55,12 @@ module.exports = (options = {}) => ({
     },
     devtool: options.dev ? '#eval-source-map' : '#source-map',
     devServer: {
-        host: '127.0.0.1',
-        port: 8010,
+        host: 'localhost',
+        port: 13140,
         proxy: {
-            '/api/': {
-                target: 'http://127.0.0.1:8080',
-                changeOrigin: true,
+            '/api': {
+                target: 'http://localhost:13141',
+                //changeOrigin: true,
                 pathRewrite: {
                     '^/api': ''
                 }

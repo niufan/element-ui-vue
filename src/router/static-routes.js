@@ -10,32 +10,32 @@ const staticRoutes =
         redirect: '/login'
     }, {
         path: '/error',
-        component: () => import(/* webpackChunkName: 'error' */ '../page/error'),
+        component: () => import(/* webpackChunkName: 'error' */ '~/common/template/error'),
         children: [
             {
                 path: '401',
-                component: () => import(/* webpackChunkName: 'error' */ '../page/error/401')
+                component: () => import(/* webpackChunkName: 'error' */ '../common/template/error/401')
             },
             {
                 path: '403',
-                component: () => import(/* webpackChunkName: 'error' */ '../page/error/403')
+                component: () => import(/* webpackChunkName: 'error' */ '../common/template/error/403')
             },
             {
                 path: '404',
-                component: () => import(/* webpackChunkName: 'error' */ '../page/error/404')
+                component: () => import(/* webpackChunkName: 'error' */ '../common/template/error/404')
             },
             {
                 path: '500',
-                component: () => import(/* webpackChunkName: 'error' */ '../page/error/500')
+                component: () => import(/* webpackChunkName: 'error' */ '../common/template/error/500')
             }
         ]
     }, {
         path: '/login',
         name: 'login',
-        component: () => import(/* webpackChunkName: 'login' */ '~/page/login')
+        component: () => import(/* webpackChunkName: 'login' */ '~/asc/template/auth/login')
     }, {
         path: '/home',
         name: 'home',
-        component: () => import(/* webpackChunkName: 'home' */ '~/page/home')
+        component: () => import(/* webpackChunkName: 'home' */ '~/common/template/home')
     }];
 export default staticRoutes;

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
+import qs from 'qs'
+import * as Cookies from 'js-cookie'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import Vue from 'vue'
@@ -18,4 +19,4 @@ Vue.use(Vuex);
 Vue.use(VueI18n);
 Vue.use(ElementUI);
 
-export {axios, Cookies, NProgress, Vue, Vuex, mapState, mapActions, VueI18n, VueRouter, ElementUI, ElementLocale, ElementEN, ElementZH_CN};
+export {axios, qs, Cookies, NProgress, Vue, Vuex, mapState, mapActions, VueI18n, VueRouter, ElementUI, ElementLocale, ElementEN, ElementZH_CN};

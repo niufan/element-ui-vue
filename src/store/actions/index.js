@@ -1,11 +1,11 @@
-import locale from '~/locale'
+import locale from '~/common/locale'
 
 export default {
     loadLang({dispatch, commit, state}, lang) {
         // 加载要切换的语言包
         let langPackList = state.langPack;
         if (!langPackList.includes(lang)) {
-            return import(/* webpackChunkName: "lang/lang-[request]" */ `~/locale/lang/${lang}`).then(msgs => {
+            return import(/* webpackChunkName: "lang/lang-[request]" */ `~/common/locale/lang/${lang}`).then(msgs => {
                 locale.setLocaleMessage(lang, msgs.default);
                 locale.locale = lang;
                 commit('addLangPack', lang);

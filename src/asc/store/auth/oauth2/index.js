@@ -1,16 +1,15 @@
-import Api from "~/common/api"
-import Oauth2Token from './oauth2-token'
-
-
-const state = {
-    token: null
-};
+import OAuth2Api from "~/asc/api/auth/oauth2";
+import TokenStore from './token-store';
 
 const MUTATION_SET_TOKEN = 'setToken';
 
+const state = {
+    token: TokenStore.getToken()
+};
+
 const mutations = {
     [MUTATION_SET_TOKEN]: (state, data) => {
-        state.token = new Oauth2Token(data);
+        TokenStore.setToken(data)
     }
 };
 
@@ -25,7 +24,7 @@ const actions = {
      */
     login({commit}, {username, password}) {
         return new Promise((resolve) => {
-            Api.oauth2.login({username: username, password: password}).then(res => {
+            OAuth2Api.login({username: username, password: password}).then(res => {
                 if (res) {
                     commit(MUTATION_SET_TOKEN, res);
                 }
@@ -39,19 +38,18 @@ const actions = {
         return new Promise((resolve) => {
             commit(MUTATION_SET_TOKEN, null);
             resolve()
-        })
+        });
     },
 
     // 获取新Token
     refreshToken({commit, state}){
         return new Promise((resolve) => {
-            Api.oauth2.refreshToken({refresh_token: state.token.getRefreshToken()}).then((res) =>{
+            OAuth2Api.refreshToken({refresh_token: state.token.getRefreshToken()}).then((res) =>{
                 commit(MUTATION_SET_TOKEN, res);
                 resolve()
             })
-        })
+        });
     }
-
 };
 
 export default {

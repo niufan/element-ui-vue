@@ -1,6 +1,8 @@
 import {axios, ElementUI} from '~/vendor'
 import router from '~/router'
 import store from '~/store'
+import TokenStore from '~/asc/store/auth/oauth2/token-store';
+import {Utils} from '~/common/util/index'
 
 // 超时设置
 const ajax = axios.create({
@@ -75,17 +77,18 @@ let requestHelper = new RequestHelper();
 // 每次请求都为http头增加authorization字段，其内容为token
 ajax.interceptors.request.use(
     config => {
-        console.log('请求：' + config);
+        console.log(Utils.format() + ' 请求：', config);
+        // debugger
         let cancelTokenSource = axios.CancelToken.source();
         config.cancelToken = cancelTokenSource.token;
-        let token = store.state.oauth2.token;
-        if (token != null) {
+        let token = TokenStore.getToken();
+        if (!Utils.isEmpty(token)) {
             config.headers.authorization = token.getAuthorization();
         }
         if (requestHelper.canCancelled(config)) {
             cancelTokenSource.cancel(config);
         }
-        return config
+        return config;
     },
     err => {
         return Promise.reject(err);
@@ -100,6 +103,7 @@ ajax.interceptors.response.use(
         return Promise.resolve(response.data)
     },
     error => {
+        // debugger
         if (axios.isCancel(error)) {
             requestHelper.remove(error.message);
         } else {
@@ -118,10 +122,13 @@ ajax.interceptors.response.use(
                     let config = error.config;
                     if (!config.isRetryRequest) {
                         return store.dispatch("oauth2/refreshToken").then((res) => {
-                            config.isRetryRequest = true;
-                            config.baseURL = '';
-                            config.headers.Authorization = store.state.oauth2.token.getAccessToken();
-                            return axios(config);
+                            let token = TokenStore.getToken();
+                            if (!Utils.isEmpty(token)) {
+                                config.isRetryRequest = true;
+                                config.baseURL = '';
+                                config.headers.Authorization = token.getAccessToken();
+                                return axios(config);
+                            }
                         }).catch(function() {
                             store.dispatch('oauth2/logout');
                             router.replace({
